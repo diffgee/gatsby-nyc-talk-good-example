@@ -1,21 +1,46 @@
 import React from "react"
-import { Link } from "gatsby"
-
-import Layout from "../components/layout"
-import Image from "../components/image"
+import { graphql } from "gatsby"
+import Img from "gatsby-image"
 import SEO from "../components/seo"
+import Layout from "../components/Layout"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+export default props => {
+  const [reynsifjara, skogafoss] = props.data.allFile.edges.map(
+    edge => edge.node.childImageSharp.fluid
+  )
+  return (
+    <Layout>
+      <SEO title="Reynisfjara and Skógafoss" />
+      <h1>Welcome to Iceland</h1>
+      <Img fluid={reynsifjara} alt="Reynisfjara beach" />
+      <p>
+        Reynisfjara black sand beach, near the town of Vik. Check out the
+        beautiful Reynisdrangar rock formation in the ocean.
+      </p>
+      <Img fluid={skogafoss} alt="Skogafoss waterfall in Southern Iceland" />
+      <p>
+        Skógafoss is one of the most famous waterfalls in Iceland. Make sure you
+        wear a rain poncho when you visit because the mist is powerful.
+      </p>
+    </Layout>
+  )
+}
 
-export default IndexPage
+export const icelandImagesQuery = graphql`
+  query {
+    allFile(
+      filter: { relativePath: { in: ["reynisfjara.jpg", "skogafoss.jpg"] } }
+      sort: { fields: absolutePath }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    }
+  }
+`

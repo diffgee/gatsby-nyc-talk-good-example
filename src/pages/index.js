@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import SEO from "../components/seo"
-import Layout from "../components/Layout"
+import Layout from "../components/layout"
 
 export default props => {
   const [reynsifjara, skogafoss] = props.data.allFile.edges.map(
@@ -35,7 +35,7 @@ export const icelandImagesQuery = graphql`
       edges {
         node {
           childImageSharp {
-            fluid {
+            fluid(maxWidth: 1400) {
               ...GatsbyImageSharpFluid
             }
           }

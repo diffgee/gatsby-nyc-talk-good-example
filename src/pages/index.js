@@ -5,9 +5,12 @@ import SEO from "../components/seo"
 import Layout from "../components/layout"
 
 export default props => {
-  const [bjork, godafoss, reynsifjara, skogafossScary, skogafoss, thorsMork] = props.data.allFile.edges.map(
+  const fluidImages = props.data.allFile.edges.map(
     edge => edge.node.childImageSharp.fluid
-  )
+  );
+  
+  const [bjork, godafoss, reynsifjara, skogafossScary, skogafoss, thorsMork] = fluidImages;
+  
   return (
     <Layout>
       <SEO title="Reynisfjara and Skógafoss" />
